@@ -9,6 +9,7 @@ class Admin(commands.Cog):
     @commands.is_owner()
     async def reload(self, ctx: commands.Context, cog: str):
         try:
+            await ctx.message.delete()
             await ctx.send(f"Start hot-reloading Extension: **{cog}**...", delete_after=7)
             self.bot.reload_extension(f"cogs.{cog}")
         except Exception as e:
@@ -20,6 +21,7 @@ class Admin(commands.Cog):
     @commands.is_owner()
     async def reload_all(self, ctx: commands.Context):
         reloaded = []
+        await ctx.message.delete()
         await ctx.send(f"Start hot-reloading ALL extensions...", delete_after=4)
         for ext in list(self.bot.extensions):
             try:
