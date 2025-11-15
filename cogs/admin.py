@@ -1,11 +1,8 @@
 from disnake.ext import commands
 
-class Adim(commands.Cog):
+class Admin(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-    
-    
-    # TODO: Errorhandling without adminrights
      
     @commands.command(name="reload")
     @commands.has_permissions(administrator=True)
@@ -30,7 +27,16 @@ class Adim(commands.Cog):
                 await ctx.send(f"Error reload extension `{ext}`:\n```{e}```", delete_after=7)
         await ctx.send(f"Hot-Reloaded:\n"+"\n".join(reloaded), delete_after=7)
 
+    # errohandling
+    @commands.Cog.listener()
+    async def on_command_error(self, ctx: commands.Context, error):
+        if isinstance(error, commands.CheckFailure):
+            await ctx.send("Du hast leider nich die nötigen Recht um diesen Befehl auszuführen!")
+        elif isinstance(error, commands.CommandNotFound):
+            pass
+        else:
+            await ctx.send(f"Ein Fehler ist aufgetreten:\n```{error}```")
     
 def setup(bot: commands.Bot):
-    bot.add_cog(Adim(bot))
+    bot.add_cog(Admin(bot))
                 
