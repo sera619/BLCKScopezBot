@@ -1,6 +1,6 @@
 import disnake
 from disnake.ext import commands
-from core.config import ROLE_RULE_ID
+from core.config import ROLE_RULE_ID, RULES_CHANNEL_ID
 from views.rollbutton_view import RuleButtonView
 
 
@@ -8,10 +8,15 @@ class RulezCog(commands.Cog):
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         
-    @commands.command(name="rulez")
-    @commands.has_permissions(administrator=True)
-    async def rules(self, ctx: commands.Context):
+    async def post_rules(self):
+        guild = self.bot.guilds[0]
+        channel = guild.get_channel(int(RULES_CHANNEL_ID))
         role_id = int(ROLE_RULE_ID)
+        
+        try:
+            await channel.purge(limit=100)
+        except Exception as e:
+            print(f"Error purge rules channel:\n{e}")
         
         embed = disnake.Embed(
         title="📜 Server Regeln",
@@ -48,7 +53,12 @@ class RulezCog(commands.Cog):
         )
         embed.set_footer(text="Das BLCKScopez Support-Team bedankt sich!\nViel Spaß!")
         view = RuleButtonView(role_id=role_id)
-        await ctx.send(embed=embed, view=view)
+        await channel.send(embed=embed, view=view)
+        
+    @commands.Cog.listener()
+    async def on_ready(self):
+        await self.bot.wait_until_ready()
+        await self.post_rules()
 
 
 def setup(bot: commands.Bot):
