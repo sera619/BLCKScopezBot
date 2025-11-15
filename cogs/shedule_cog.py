@@ -3,7 +3,7 @@ from disnake.ext import commands
 from core.config import BOT_ICON_URL, DISCORD_SERVER_ID
 
 class SheduleCommands(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
 
     @commands.slash_command(name="stream_zeiten", 
@@ -14,13 +14,13 @@ class SheduleCommands(commands.Cog):
         embed = disnake.Embed(
             title="BLCKScopez Bot - Streamzeiten",
             description=("Aktuell gibt es noch keine festen Streamzeiten.\n\n"
-                         f"**Montag:**       --:-- Uhr\n"
-                         f"**Dienstag:**     --:-- Uhr\n"
-                         f"**Mittwoch:**     --:-- Uhr\n"
-                         f"**Donnerstag:**   --:-- Uhr\n"
-                         f"**Freitag:**      --:-- Uhr\n"
-                         f"**Samstag:**      --:-- Uhr\n"
-                         f"**Sonntag:**      --:-- Uhr\n"
+                            f"**Montag:**       --:-- Uhr\n"
+                            f"**Dienstag:**     --:-- Uhr\n"
+                            f"**Mittwoch:**     --:-- Uhr\n"
+                            f"**Donnerstag:**   --:-- Uhr\n"
+                            f"**Freitag:**      --:-- Uhr\n"
+                            f"**Samstag:**      --:-- Uhr\n"
+                            f"**Sonntag:**      --:-- Uhr\n"
                          ),
             color=disnake.Color.dark_red()
         )
