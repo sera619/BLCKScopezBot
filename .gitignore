@@ -1,3 +1,4 @@
 /env-scopezbot
 .env
 __pycache__
+CodelineCounter.py
