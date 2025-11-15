@@ -19,7 +19,7 @@ class BLCKScopezBot(commands.Bot):
         self.twitch_icon_url = TWITCH_ICON_URL
         self.bot_icon_url = BOT_ICON_URL
         self.twitch_url = TWITCH_URL
-        self.send_starup_message = True
+        self.send_starup_message = False
       
     async def on_ready(self):
         # print(f"logged in as: {self.user} | User ID: {self.user.id}")

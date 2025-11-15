@@ -57,8 +57,10 @@ class RulezCog(commands.Cog):
         
     @commands.Cog.listener()
     async def on_ready(self):
-        await self.bot.wait_until_ready()
-        await self.post_rules()
+        dev_mode = False
+        if not dev_mode:
+            await self.bot.wait_until_ready()
+            await self.post_rules()
 
 
 def setup(bot: commands.Bot):
