@@ -11,7 +11,7 @@ class MemberEvent(commands.Cog):
         print(f"Member {member.name} joined discord.")
         sys_channel = member.guild.system_channel 
         if sys_channel:
-            await sys_channel.send(f"Willkommen im Irrenhaus, {member.display_name}! :wave:\n")
+            await sys_channel.send(f"Willkommen im Irrenhaus, {member.display_name}! 👋\n")
 
 
 def setup(bot: commands.Bot):
