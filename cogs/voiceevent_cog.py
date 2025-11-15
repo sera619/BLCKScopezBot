@@ -17,10 +17,11 @@ class VoiceEvent(commands.Cog):
         if before.channel is None and after.channel is not None:
             vc = after.channel
             if vc: 
-                await vc.send(f" **{member.display_name}** joined!")
+                #await vc.send(f" **{member.display_name}** joined!")
                 if member.id == int(SERA_ID):
-                    deleted = await vc.purge(limit=100)
-                    await vc.send(f"✅ Gelöscht {len(deleted)} Nachrichten.", delete_after=5)
+                    await vc.purge(limit=100)
+                    #deleted = await vc.purge(limit=100)
+                    #await vc.send(f"✅ Gelöscht {len(deleted)} Nachrichten.", delete_after=5)
             return
         
         # user leaves channel
