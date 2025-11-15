@@ -1,7 +1,8 @@
 # BLCKScopez Discord-Bot
 
-> This is the private discord bot from BLCKScopez Twitch
+![Logo](data/bot_icon.png)
 
+> This is the private discord bot from BLCKScopez Twitch
 
 
 ## Changelogs
