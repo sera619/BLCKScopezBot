@@ -3,7 +3,7 @@ from disnake.ext import commands
 from core.config import DISCORD_SERVER_ID
 
 class PurgeCog(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         self.bot = bot
         
     # purge all messages in channel

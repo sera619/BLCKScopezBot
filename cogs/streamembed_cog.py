@@ -4,11 +4,9 @@ from core.config import BOT_ICON_URL, DISCORD_SERVER_ID, NEWS_CHANNEL_ID, TWITCH
 
 class StreamEmbedCog(commands.Cog):
     def __init__(self, bot: commands.Bot):
-        self.bot = bot
-    
+        self.bot = bot    
     
     # Testcommand: /create_streamembed title:Test description:test date:11.12.2025 start_time:13:00
-    
     @commands.slash_command(name="create_streamembed", 
                             description="Erstellt eine Nachricht für den nächsten Stream. (Admin)",
                             default_member_permissions=disnake.Permissions(administrator=True),
