@@ -1,6 +1,6 @@
 import disnake
 from disnake.ext import commands
-from core.config import DISCORD_SERVER_ID, CLIP_CHANNEL_ID, BOT_ICON_URL
+from core.config import DISCORD_SERVER_ID, CLIP_CHANNEL_ID
 
 
 class ClipCog(commands.Cog):
