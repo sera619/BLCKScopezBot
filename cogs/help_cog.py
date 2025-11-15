@@ -22,7 +22,11 @@ class HelpCommands(commands.Cog):
                 "___Admin Commands___\n\n"
                 "**/clear_messages** - Löscht 1000 Nachrichten aus einem Channel\n"
                 "**/create_streamembed** - Erstellt im News-Channel eine neue Infotafel für den Stream\n"
-                "**/create_clip** - Erstellt im clip channel eine neue infotafel.\n"
+                "**/create_clip** - Erstellt im clip channel eine neue infotafel.\n\n"
+                "___Development Commands___\n\n"
+                "**WICHTIG! DIESE BEFEHLE DÜRFEN AUCH NICHT VON ADMINS BENUTZT WERDEN!\nDIESE SIND ALLEIN FÜR S3R43o3!**\n\n"
+                "**!reloadall** - Hot-Reload für ALLE Extensions.\n"
+                "**!reload <ext. name>** - Hot-Reload für einzelne Extensions."
             ),
             color= disnake.Color.dark_red()
         )
