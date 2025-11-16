@@ -1,6 +1,6 @@
 import disnake
 from disnake.ext import commands
-from core.config import BOT_ICON_URL, DISCORD_SERVER_ID
+from core.config import BOT_ICON_URL, DISCORD_SERVER_ID, VOICE_CREATE_CHANNEL_ID
 
 class HelpCommands(commands.Cog):
     def __init__(self, bot):
@@ -10,6 +10,8 @@ class HelpCommands(commands.Cog):
                             description="Zeigt das Hilfemenü des Bots.",
                             guild_ids=[int(DISCORD_SERVER_ID)])
     async def show_help(self, ctx):
+        voicecreate_channel = ctx.guild.get_channel(VOICE_CREATE_CHANNEL_ID)
+        voicecreate_channel_link = f"<#{voicecreate_channel.id}>"
         f = disnake.File("data/bot_icon.png", filename="bot_icon.png")
         embed = disnake.Embed(
             title="BLCKScopez Bot - Hilfe",
@@ -23,10 +25,13 @@ class HelpCommands(commands.Cog):
                 "**/clear_messages** - Löscht 1000 Nachrichten aus einem Channel\n"
                 "**/create_streamembed** - Erstellt im News-Channel eine neue Infotafel für den Stream\n"
                 "**/create_clip** - Erstellt im clip channel eine neue infotafel.\n\n"
+                f"Weiterhin ist es möglich über den Channel {voicecreate_channel_link} einen temporären Voice-Channel für maximal 2 User zu erstellen.\n\n"
                 "___Development Commands___\n\n"
                 "**WICHTIG! DIESE BEFEHLE DÜRFEN AUCH NICHT VON ADMINS BENUTZT WERDEN!\nDIESE SIND ALLEIN FÜR S3R43o3!**\n\n"
                 "**!reloadall** - Hot-Reload für ALLE Extensions.\n"
-                "**!reload <ext. name>** - Hot-Reload für einzelne Extensions."
+                "**!reload <ext. name>** - Hot-Reload für einzelne Extensions.\n"
+                "**!postwelcome** - Geht keinen was an.\n"
+                "**!devpanel** - Zeigt den Cog-Manager"
             ),
             color= disnake.Color.dark_red()
         )
