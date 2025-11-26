@@ -1,5 +1,4 @@
 import disnake
-import logging
 from disnake.ext import commands
 from core.config import BOT_VERSION, BOT_CHANNEL_ID, TWITCH_ICON_URL, BOT_ICON_URL, TWITCH_URL, NEWS_CHANNEL_ID
 from core.logger import logger
@@ -85,7 +84,6 @@ class BLCKScopezBot(commands.Bot):
                     break
             if startup_channel:
                 break
-        
         
         if startup_channel:
             if self.send_starup_message:

@@ -1,7 +1,7 @@
 import asyncio, disnake, sys, os, subprocess, time, logging
 from disnake.ext import commands
 
-from core.config import DISCORD_TOKEN
+from core.config import DISCORD_TOKEN, BOT_VERSION
 from core.botcore import BLCKScopezBot
 from core.logger import logger, setup_logger
 import subprocess
@@ -14,6 +14,7 @@ import sys
 bot: commands.Bot = BLCKScopezBot()
 bot_thread = None
 bot_loop = None
+RUN_WITH_GUI = True
 
 def load_cogs(bot: commands.Bot):
     #print("Initialize Cogs...\n")
@@ -244,7 +245,7 @@ class BotGUI(tk.Tk):
         # Footer
         footer = tk.Label(
             self,
-            text="© 2025 BLCKScopez – Bot Launcher v1.0",
+            text=f"© 2025 BLCKScopez – Bot Launcher v{BOT_VERSION}",
             font=("Segoe UI", 9),
             fg="#808080",
             bg="#1e1e1e"
@@ -300,9 +301,12 @@ class BotGUI(tk.Tk):
 
 
 def main():
-    gui = BotGUI()
-    gui.mainloop()
-    #bot.run(DISCORD_TOKEN)
+    if RUN_WITH_GUI:        
+        gui = BotGUI()
+        gui.mainloop()
+    else:
+        load_cogs(bot=bot)
+        bot.run(DISCORD_TOKEN)
 
 if __name__ == "__main__":
     try:
