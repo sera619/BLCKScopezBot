@@ -4,6 +4,7 @@ from disnake.ext import commands
 from core.config import DISCORD_TOKEN, BOT_VERSION
 from core.botcore import BLCKScopezBot
 from core.logger import logger, setup_logger
+from gui.cog_manager_window import CogManagerWindow
 import subprocess
 import threading
 import tkinter as tk
@@ -151,7 +152,9 @@ class BotGUI(tk.Tk):
         self.title("BLCKScopez Discord Bot Launcher")
         self.geometry("500x600")
         self.configure(bg="#1e1e1e")
-
+        self.setup_gui()
+        
+    def setup_gui(self):
         # Header
         header = tk.Label(
             self,
@@ -241,7 +244,15 @@ class BotGUI(tk.Tk):
             **btn_style
         )
         self.clear_log_button.grid(row=0, column=3, padx=10)
-
+    
+        self.cog_button = tk.Button(
+            frame,
+            text="Cog Manager",
+            command= lambda: self.open_cog_manager(),
+            **btn_style
+        )
+        self.cog_button.grid(row=1, column=0, padx=10, pady=10)
+        
         # Footer
         footer = tk.Label(
             self,
@@ -295,6 +306,18 @@ class BotGUI(tk.Tk):
         else:
             self.uptime_label.config(text="Uptime: 00:00:00", fg="#ff5555")
         self.after(1000, self.update_uptime_loop) 
+
+    # ---------- opem Cog manager ----------
+    def open_cog_manager(self):
+        win = CogManagerWindow(self, bot)
+        self.update_idletasks()
+        main_x = self.winfo_x()
+        main_y = self.winfo_y()
+        main_w = self.winfo_width()
+        offset = 20
+        cog_x = main_x + main_w + offset
+        cog_y = main_y
+        win.geometry(f"+{cog_x}+{cog_y}")
 
     def flush(self):
         pass
