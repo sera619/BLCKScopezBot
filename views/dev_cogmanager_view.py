@@ -3,7 +3,7 @@ from disnake.ext import commands
 import os
 
 class CogManagerView(disnake.ui.View):
-    def __init__(self, bot):
+    def __init__(self, bot: commands.Bot):
         super().__init__(timeout=300)
         self.bot = bot
 
@@ -88,3 +88,39 @@ class CogManagerView(disnake.ui.View):
                 f"❌ Error reloading `{name}`:\n```{e}```",
                 ephemeral=True
             )
+
+    # --------------------
+    # RELOAD ALL
+    # --------------------
+    @disnake.ui.button(label="Reload All", style=disnake.ButtonStyle.primary)
+    async def reload_all_button(self, button, interaction: disnake.MessageInteraction):
+        reloaded = []
+        for ext in list(self.bot.extensions):
+            try:
+                self.bot.reload_extension(ext)
+                reloaded.append(ext)
+            except Exception as e:
+                await interaction.response.send_message(
+                f"❌ Error reloading `{ext}`:\n```{e}```",
+                ephemeral=True
+            )
+        await interaction.response.send_message(
+            f"🔄 Successfully reloaded\n" +"\n".join(reloaded), 
+            ephemeral=True
+        )
+
+    # --------------------
+    # QUIT
+    # --------------------
+    @disnake.ui.button(label="Quit", style=disnake.ButtonStyle.danger, row=1)
+    async def quit_panel_button(self, button, inter: disnake.MessageInteraction):
+        try:
+            await inter.message.delete()
+        except disnake.NotFound:
+            pass
+        
+        await inter.response.send_message(
+            "Devpanel closed.", ephemeral=True
+        )
+    
+    
