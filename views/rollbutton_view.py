@@ -1,4 +1,5 @@
 import disnake
+from core.logger import logger
 
 class RuleButtonView(disnake.ui.View):
     def __init__(self, role_id: int):
@@ -10,9 +11,10 @@ class RuleButtonView(disnake.ui.View):
         guild = interaction.guild
         member = interaction.user
         role = guild.get_role(self.role_id)
-        
+
         if role in member.roles:
             await interaction.response.send_message("Du hast die Rolle bereits!", ephemeral=True, delete_after=7)
         else:
+            logger.info(f"User:{member} from guild: {guild} get the role: {role}!")
             await member.add_roles(role)
             await interaction.response.send_message(f"Rolle **{role.name}** vergeben!", ephemeral=True, delete_after=7)

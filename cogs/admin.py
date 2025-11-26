@@ -1,6 +1,7 @@
 import disnake
 from disnake.ext import commands
 from views.dev_cogmanager_view import CogManagerView
+from core.logger import logger
 
 class Admin(commands.Cog):
     def __init__(self, bot: commands.Bot):
@@ -82,7 +83,8 @@ class Admin(commands.Cog):
     @commands.Cog.listener()
     async def on_command_error(self, ctx: commands.Context, error):
         if isinstance(error, commands.CheckFailure):
-            await ctx.send("Du hast leider nich die nötigen Recht um diesen Befehl auszuführen!")
+            await ctx.send("Du hast leider nich die nötigen Recht um diesen Befehl auszuführen!\nDieser unauthorisierte Zugriff wird geloggt!")
+            logger.warning(f"User {ctx.user} tryed to use the devpanel!")
         elif isinstance(error, commands.CommandNotFound):
             pass
         else:

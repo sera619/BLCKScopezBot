@@ -1,6 +1,7 @@
 import disnake
 from disnake.ext import commands
 from core.config import BOT_ICON_URL, DISCORD_SERVER_ID, VOICE_CREATE_CHANNEL_ID
+from core.logger import logger
 
 class HelpCommands(commands.Cog):
     def __init__(self, bot):
@@ -37,6 +38,7 @@ class HelpCommands(commands.Cog):
         )
         embed.set_footer(text="Weitere Funktionen folgen bald.\n© S3R43o3 2025")
         embed.set_thumbnail(url=BOT_ICON_URL)
+        logger.info(f"User {ctx.user} used '/hilfe' command!")
         await ctx.send(embed=embed, file=f)
 
 def setup(bot: commands.Bot):
