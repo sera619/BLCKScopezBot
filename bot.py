@@ -260,7 +260,6 @@ class BotGUI(tk.Tk):
         self.update_uptime_loop()
         logger.info(f"Bot GUI startet!")
 
-        
     # ---------- Bot Control Methods ----------
     def start_bot(self):
         start_bot_thread(self.log_area)
