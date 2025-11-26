@@ -8,38 +8,48 @@ from gui.cog_manager_window import CogManagerWindow
 import subprocess
 import threading
 import tkinter as tk
-from tkinter import scrolledtext, messagebox
+from tkinter import scrolledtext
 import os
 import sys
+import pkgutil
+import cogs
 
 bot: commands.Bot = BLCKScopezBot()
 bot_thread = None
 bot_loop = None
 RUN_WITH_GUI = True
 
-def load_cogs(bot: commands.Bot):
-    #print("Initialize Cogs...\n")
-    counter = 0
-    for filename in os.listdir("./cogs"):
-        if filename.endswith(".py") and not filename.startswith("_"):
-            cog = f"cogs.{filename[:-3]}"
-            # if cog =="cogs.rulez_cog":
-            #     continue
-            counter += 1
-            #print(f"{counter}) Cog successfully loaded: {cog}")
-            bot.load_extension(cog)
-    print(f"\n{counter}s Cogs successfully loaded!")
+BASE_DIR = getattr(sys, "_MEIPASS", os.path.dirname(os.path.abspath(__file__)))
+COGS_PATH = os.path.join(BASE_DIR, "cogs")
+if COGS_PATH not in sys.path:
+    sys.path.insert(0, COGS_PATH)
 
+
+def load_cogs(bot):
+    print("Scanning package cogs...")
+    for module in pkgutil.iter_modules(cogs.__path__, "cogs."):
+        name = module.name
+        if name == "cogs._rules_cog":
+            continue
+        print(f"Loading {name}")
+        bot.load_extension(name)   
+    
 def run_bot():
-    global bot_loop
-    load_cogs(bot)
-    bot_loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(bot_loop)
-    try:
-        bot_loop.run_until_complete(bot.start(DISCORD_TOKEN))
-    except Exception as e:
-        print(f"Bot stopped, error:\n{e}")
+    import traceback
+    global bot_loop  # <-- DAS hat dir gefehlt!
+    # print("run_bot() started")
 
+    try:
+        load_cogs(bot)
+
+        bot_loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(bot_loop)
+
+        bot_loop.run_until_complete(bot.start(DISCORD_TOKEN))
+
+    except Exception:
+        traceback.print_exc()
+        
 def update_repo(output_box, gui_instance):
     output_box.insert(tk.END, "Updating repository...\n")
     output_box.see(tk.END)
@@ -119,40 +129,51 @@ def clear_logs(outputbox):
         outputbox.see(tk.END)
 
 def start_bot_thread(output_box=None):
+    print("start_bot_thread called")
+
     global bot_thread
     if bot_thread is None or not bot_thread.is_alive():
-        bot_thread = threading.Thread(target=run_bot, daemon=True)
+        print("creating thread…")
+
+        bot_thread = threading.Thread(target=run_bot)
         bot_thread.start()
+
+        print("thread started")
+
         if output_box:
             output_box.insert(tk.END, "Bot gestartet!\n")
             output_box.see(tk.END)
         else:
             print("Bot gestartet!")
-    else:
-        if output_box:
-            output_box.insert(tk.END, "Bot läuft bereits!\n")
-            output_box.see(tk.END)
-        else:
-            print("Bot läuft bereits!")
 
 def stop_bot_thread(output_box=None):
-    global bot_loop
-    if bot_loop is not None:
+    global bot_loop, bot_thread
+    if bot_loop is not None and bot_thread is not None and bot_thread.is_alive():
         asyncio.run_coroutine_threadsafe(bot.close(), bot_loop)
+        
         if output_box:
-            #output_box.insert(tk.END, "Bot wird gestoppt...\n")
+            output_box.insert(tk.END, "Bot wird gestoppt...\n")
             output_box.see(tk.END)
-        else:
-            pass
+
+        # wait short for thread
+        bot_thread.join(timeout=3)
+
+        bot_loop = None
+        bot_thread = None
+
 # ---------------- GUI ----------------
 class BotGUI(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.bot_start_time =None 
+        self.bot_start_time = None 
         self.title("BLCKScopez Discord Bot Launcher")
         self.geometry("500x600")
         self.configure(bg="#1e1e1e")
         self.setup_gui()
+        
+        # print("COG-FOLDER PATH:", utils.resource_path("cogs"))
+        # print("FILES THERE:", os.listdir(utils.resource_path("cogs")) if os.path.exists(utils.resource_path("cogs")) else "NOT FOUND")
+
         
     def setup_gui(self):
         # Header
@@ -324,7 +345,7 @@ class BotGUI(tk.Tk):
 
 
 def main():
-    if RUN_WITH_GUI:        
+    if RUN_WITH_GUI:
         gui = BotGUI()
         gui.mainloop()
     else:
