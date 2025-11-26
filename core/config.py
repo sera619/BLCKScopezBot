@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-BOT_VERSION = "1.5.8"
+BOT_VERSION = "1.6.1"
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 TWITCH_ICON_URL = "https://static.twitchcdn.net/assets/favicon-32-e29e246c157142c94346.png"
