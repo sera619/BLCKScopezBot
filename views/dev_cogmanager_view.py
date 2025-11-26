@@ -1,6 +1,7 @@
 import disnake
 from disnake.ext import commands
 import os
+import utils
 
 class CogManagerView(disnake.ui.View):
     def __init__(self, bot: commands.Bot):
@@ -9,7 +10,8 @@ class CogManagerView(disnake.ui.View):
 
         # Build dropdown options dynamically
         options = []
-        for file in os.listdir("./cogs"):
+        file_path = utils.resource_path("cogs")
+        for file in os.listdir(file_path):
             if file.endswith(".py") and file not in ("__init__.py",):
                 name = file[:-3]
                 loaded = f"🟢 LOADED" if f"cogs.{name}" in bot.extensions else "🔴 OFF"

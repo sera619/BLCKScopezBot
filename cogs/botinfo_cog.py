@@ -1,6 +1,7 @@
 import disnake
 from disnake.ext import commands
 from core.config import BOT_ICON_URL, BOT_VERSION, DISCORD_SERVER_ID
+import utils
 
 class BotinfoCommands(commands.Cog):    
     def __init__(self, bot):
@@ -12,13 +13,14 @@ class BotinfoCommands(commands.Cog):
                             default_member_permissions=disnake.Permissions(administrator=True),
                             guild_ids=[int(DISCORD_SERVER_ID)])
     async def botinfo(self, ctx):
-        file = disnake.File("data/bot_icon.png", filename="bot_icon.png")
+        file_path = utils.resource_path("data/bot_icon.png") 
+        file = disnake.File(file_path, filename="bot_icon.png")
         embed = disnake.Embed(
             title="BLCKScopez Bot - Info",
             description=(
                 f"Der Bot ist online und bereit für Action.\n"
                 f"Version: {BOT_VERSION}\n"
-                "_Um alle Botbefehle zu sehen gebe **!hilfe** ein._"
+                "_Um alle Botbefehle zu sehen gebe **/hilfe** ein._"
             ),
             color=disnake.Color.dark_gray()
         )

@@ -1,6 +1,8 @@
 import os
 import tkinter as tk
 from tkinter import messagebox
+import cogs
+import pkgutil
 
 class CogManagerWindow(tk.Toplevel):
     def __init__(self, master, bot, refresh_callback = None):
@@ -33,64 +35,64 @@ class CogManagerWindow(tk.Toplevel):
             widget.destroy()
 
         row = 0
-        for filename in os.listdir("./cogs"):
-            if filename.endswith(".py") and not filename.startswith("_"):
-                cog_name = filename[:-3]
-                full_cog = f"cogs.{cog_name}"
 
-                # Status check
-                is_loaded = full_cog in self.bot.extensions
+        # Alle Module im Package "cogs" durchsuchen (EXE-sicher)
+        for module in pkgutil.iter_modules(cogs.__path__, "cogs."):
+            full_cog = module.name              # z.B. "cogs.wetter"
+            cog_name = full_cog.split(".")[1]   # z.B. "wetter"
 
-                status_color = "#55ff55" if is_loaded else "#ff5555"
-                status_text = "Loaded" if is_loaded else "Unloaded"
+            # Status check
+            is_loaded = full_cog in self.bot.extensions
+            status_color = "#55ff55" if is_loaded else "#ff5555"
+            status_text = "Loaded" if is_loaded else "Unloaded"
 
-                tk.Label(
-                    self.cog_frame,
-                    text=cog_name,
-                    fg="#ffffff",
-                    bg="#1e1e1e",
-                    font=("Segoe UI", 11)
-                ).grid(row=row, column=0, sticky="w", padx=10, pady=5)
+            tk.Label(
+                self.cog_frame,
+                text=cog_name,
+                fg="#ffffff",
+                bg="#1e1e1e",
+                font=("Segoe UI", 11)
+            ).grid(row=row, column=0, sticky="w", padx=10, pady=5)
 
-                tk.Label(
-                    self.cog_frame,
-                    text=status_text,
-                    fg=status_color,
-                    bg="#1e1e1e",
-                    font=("Segoe UI", 11)
-                ).grid(row=row, column=1, padx=10)
+            tk.Label(
+                self.cog_frame,
+                text=status_text,
+                fg=status_color,
+                bg="#1e1e1e",
+                font=("Segoe UI", 11)
+            ).grid(row=row, column=1, padx=10)
 
-                # Load / Unload Button
-                if is_loaded:
-                    tk.Button(
-                        self.cog_frame,
-                        text="Unload",
-                        bg="#3c3c3c",
-                        fg="#ffffff",
-                        width=10,
-                        command=lambda c=full_cog: self.unload_cog(c)
-                    ).grid(row=row, column=2, padx=5)
-                else:
-                    tk.Button(
-                        self.cog_frame,
-                        text="Load",
-                        bg="#3c3c3c",
-                        fg="#ffffff",
-                        width=10,
-                        command=lambda c=full_cog: self.load_cog(c)
-                    ).grid(row=row, column=2, padx=5)
-
-                # Reload Button
+            # Load / Unload Button
+            if is_loaded:
                 tk.Button(
                     self.cog_frame,
-                    text="Reload",
+                    text="Unload",
                     bg="#3c3c3c",
                     fg="#ffffff",
                     width=10,
-                    command=lambda c=full_cog: self.reload_cog(c)
-                ).grid(row=row, column=3, padx=5)
+                    command=lambda c=full_cog: self.unload_cog(c)
+                ).grid(row=row, column=2, padx=5)
+            else:
+                tk.Button(
+                    self.cog_frame,
+                    text="Load",
+                    bg="#3c3c3c",
+                    fg="#ffffff",
+                    width=10,
+                    command=lambda c=full_cog: self.load_cog(c)
+                ).grid(row=row, column=2, padx=5)
 
-                row += 1
+            # Reload Button
+            tk.Button(
+                self.cog_frame,
+                text="Reload",
+                bg="#3c3c3c",
+                fg="#ffffff",
+                width=10,
+                command=lambda c=full_cog: self.reload_cog(c)
+            ).grid(row=row, column=3, padx=5)
+
+            row += 1
 
     def load_cog(self, cog):
         try:

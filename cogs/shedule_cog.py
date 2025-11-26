@@ -1,6 +1,7 @@
 import disnake
 from disnake.ext import commands
 from core.config import BOT_ICON_URL, DISCORD_SERVER_ID
+import utils
 
 class SheduleCommands(commands.Cog):
     def __init__(self, bot: commands.Bot):
@@ -10,7 +11,8 @@ class SheduleCommands(commands.Cog):
                             description="Zeigt die aktuellen Streamingzeiten an.",
                             guild_ids=[int(DISCORD_SERVER_ID)])
     async def zeiten(self, ctx):
-        file = disnake.File("data/bot_icon.png", filename="bot_icon.png")
+        file_path = utils.resource_path(".data/bot_icon.png") 
+        file = disnake.File(f"{file_path}", filename="bot_icon.png")
         embed = disnake.Embed(
             title="BLCKScopez Bot - Streamzeiten",
             description=("Aktuell gibt es noch keine festen Streamzeiten.\n\n"

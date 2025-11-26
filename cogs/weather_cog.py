@@ -3,6 +3,7 @@ import aiohttp
 from disnake.ext import commands
 from core.config import DISCORD_SERVER_ID, BOT_ICON_URL
 from datetime import datetime
+import utils
 
 GEOCODE_URL = "https://geocoding-api.open-meteo.com/v1/search"
 WEATHER_URL = "https://api.open-meteo.com/v1/forecast"
@@ -76,8 +77,8 @@ class WeatherCog(commands.Cog):
         raw_time = weather["time"]
         parsed = datetime.fromisoformat(raw_time)
         time = parsed.strftime("%d.%m.%Y %H:%M Uhr")
-        
-        f = disnake.File("data/bot_icon.png", filename="bot_icon.png")
+        file_path = utils.resource_path("data/bot_icon.png") 
+        f = disnake.File(f"{file_path}", filename="bot_icon.png")
 
         embed = disnake.Embed(
             title=f"Wetter in {city}",

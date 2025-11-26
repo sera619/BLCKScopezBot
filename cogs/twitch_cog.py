@@ -1,6 +1,7 @@
 import disnake
 from disnake.ext import commands
 from core.config import BOT_ICON_URL, TWITCH_ICON_URL, TWITCH_URL, DISCORD_SERVER_ID
+import utils
 
 class TwitchCommands(commands.Cog):
     def __init__(self, bot):
@@ -10,7 +11,8 @@ class TwitchCommands(commands.Cog):
                             description="Zeigt den Link zum Twitch-Stream.",
                             guild_ids=[int(DISCORD_SERVER_ID)])
     async def send_twitch(self, ctx):
-        f = disnake.File("bot_icon.png", filename="bot_icon.png")
+        file_path = utils.resource_path("data/bot_icon.png") 
+        f = disnake.File(f"{file_path}", filename="bot_icon.png")
         embed = disnake.Embed(
             title="BLCKScopez Bot - Twitch-Kanal",
             url=TWITCH_URL,

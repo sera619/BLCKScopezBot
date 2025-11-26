@@ -2,6 +2,8 @@ import disnake
 from disnake.ext import commands
 from core.config import BOT_ICON_URL, DISCORD_SERVER_ID, VOICE_CREATE_CHANNEL_ID
 from core.logger import logger
+import utils
+
 
 class HelpCommands(commands.Cog):
     def __init__(self, bot):
@@ -13,7 +15,8 @@ class HelpCommands(commands.Cog):
     async def show_help(self, ctx):
         voicecreate_channel = ctx.guild.get_channel(VOICE_CREATE_CHANNEL_ID)
         voicecreate_channel_link = f"<#{voicecreate_channel.id}>"
-        f = disnake.File("data/bot_icon.png", filename="bot_icon.png")
+        file_path = utils.resource_path("data/bot_icon.png") 
+        f = disnake.File(f"{file_path}", filename="bot_icon.png")
         embed = disnake.Embed(
             title="BLCKScopez Bot - Hilfe",
             description=(
@@ -22,6 +25,7 @@ class HelpCommands(commands.Cog):
                 "**/twitch** - zeigt den Link zum Twitchstream.\n"
                 "**/stream_zeiten** - zeigt die aktuellen Streamzeiten an\n"
                 "**/wetter <Ortsname>** - zeigt das aktuelle Wetter für den Ortan\n"
+                "**/hangman start** - Starten ein Hangmanspiel im Channel.\n"
                 "**/hilfe** - zeigt die Hilfe an\n\n"
                 "___Admin Commands___\n\n"
                 "**/clear_messages** - Löscht 1000 Nachrichten aus einem Channel\n"

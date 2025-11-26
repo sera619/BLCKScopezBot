@@ -2,12 +2,13 @@ import disnake
 from disnake.ext import commands
 from views.dev_cogmanager_view import CogManagerView
 from core.logger import logger
+import utils
 
 class Admin(commands.Cog):
     def __init__(self, bot: commands.Bot):
-        self.bot = bot
-        self.welcome_msg_filepath = "./data/welcome_message.md"
-     
+        self.bot = bot           
+        self.welcome_msg_filepath =  utils.resource_path("data/welcome_message.md")
+    
     @commands.command(name="reload")
     @commands.has_permissions(administrator=True)
     @commands.is_owner()

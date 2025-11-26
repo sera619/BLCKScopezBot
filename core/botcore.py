@@ -2,6 +2,7 @@ import disnake
 from disnake.ext import commands
 from core.config import BOT_VERSION, BOT_CHANNEL_ID, TWITCH_ICON_URL, BOT_ICON_URL, TWITCH_URL, NEWS_CHANNEL_ID
 from core.logger import logger
+import utils
 
 class BLCKScopezBot(commands.Bot):
     def __init__(self):
@@ -53,7 +54,8 @@ class BLCKScopezBot(commands.Bot):
         print("Bot now offline!")        
         
     async def start_up_message(self, channel_to_send):
-        file = disnake.File("data/bot_icon.png", filename="bot_icon.png")
+        file_path = utils.resource_path("data/bot_icon.png") 
+        file = disnake.File(file_path, filename="bot_icon.png")
         embed = disnake.Embed(
             title="BLCKScopez Bot successfully started!",
             description=(

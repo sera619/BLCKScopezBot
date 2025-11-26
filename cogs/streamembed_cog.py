@@ -1,6 +1,7 @@
 import disnake
 from disnake.ext import commands
 from core.config import BOT_ICON_URL, DISCORD_SERVER_ID, NEWS_CHANNEL_ID, TWITCH_URL
+import utils
 
 class StreamEmbedCog(commands.Cog):
     def __init__(self, bot: commands.Bot):
@@ -17,8 +18,8 @@ class StreamEmbedCog(commands.Cog):
                                   description: str,
                                   date: str, 
                                   start_time: str):
-        
-        f = disnake.File("data/bot_icon.png", filename="bot_icon.png")
+        file_path = utils.resource_path("data/bot_icon.png") 
+        f = disnake.File(f"{file_path}", filename="bot_icon.png")
         embed = disnake.Embed(
             title=f"{title}",
             description=(f"***{description}***\n\n"
