@@ -21,6 +21,7 @@ class HelpCommands(commands.Cog):
                 "**/botinfo** - zeigt Informationen über den Bot\n"
                 "**/twitch** - zeigt den Link zum Twitchstream.\n"
                 "**/stream_zeiten** - zeigt die aktuellen Streamzeiten an\n"
+                "**/wetter <Ortsname>** - zeigt das aktuelle Wetter für den Ortan\n"
                 "**/hilfe** - zeigt die Hilfe an\n\n"
                 "___Admin Commands___\n\n"
                 "**/clear_messages** - Löscht 1000 Nachrichten aus einem Channel\n"
