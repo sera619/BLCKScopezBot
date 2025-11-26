@@ -228,7 +228,7 @@ class BotGUI(tk.Tk):
 
         self.update_button = tk.Button(
             frame,
-            text="Git Pull",
+            text="Update",
             command=lambda: update_repo(self.log_area, self),
             **btn_style
         )
