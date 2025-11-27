@@ -167,7 +167,7 @@ class BotGUI(tk.Tk):
         super().__init__()
         self.bot_start_time = None 
         self.title("BLCKScopez Discord Bot Launcher")
-        self.geometry("500x600")
+        self.geometry("500x650")
         self.configure(bg="#1e1e1e")
         self.setup_gui()
         
