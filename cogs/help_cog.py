@@ -29,6 +29,7 @@ class HelpCommands(commands.Cog):
                 "**/hangman guess <Buchstabe>** - Rät einen Buchstaben im Hangmanspiel.\n"
                 "**/hangman stop** - Beendet das aktuelle Hangmanspiel im Channel.\n"
                 "**/hangman leaderboard** - Zeige die Serverweite Hangman-Rangliste.\n"
+                "**/roast <user>** - Roastet einen User mit spitzen Sprüchen.\n"
                 "**/hilfe** - zeigt die Hilfe an\n\n"
                 "___Admin Commands___\n\n"
                 "**/clear_messages** - Löscht 1000 Nachrichten aus einem Channel\n"
