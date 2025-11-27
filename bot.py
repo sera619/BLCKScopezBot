@@ -1,6 +1,5 @@
 import asyncio, disnake, sys, os, subprocess, time, logging
 from disnake.ext import commands
-
 from core.config import DISCORD_TOKEN, BOT_VERSION
 from core.botcore import BLCKScopezBot
 from core.logger import logger, setup_logger
@@ -29,7 +28,7 @@ def load_cogs(bot):
     print("Scanning package cogs...")
     for module in pkgutil.iter_modules(cogs.__path__, "cogs."):
         name = module.name
-        if name == "cogs._rules_cog":
+        if name == "cogs._rules_cog" or name == "cogs.roast":
             continue
         print(f"Loading {name}")
         bot.load_extension(name)   
@@ -240,7 +239,7 @@ class BotGUI(tk.Tk):
             command=lambda: self.start_bot(),
             **btn_style
         )
-        self.start_button.grid(row=0, column=0, padx=10)
+        self.start_button.grid(row=0, column=0, padx=5)
 
         self.stop_button = tk.Button(
             frame,
@@ -248,7 +247,7 @@ class BotGUI(tk.Tk):
             command=lambda: self.stop_bot(),
             **btn_style
         )
-        self.stop_button.grid(row=0, column=1, padx=10)
+        self.stop_button.grid(row=0, column=1, padx=5)
 
         self.update_button = tk.Button(
             frame,
@@ -256,7 +255,7 @@ class BotGUI(tk.Tk):
             command=lambda: update_repo(self.log_area, self),
             **btn_style
         )
-        self.update_button.grid(row=0, column=2, padx=10)
+        self.update_button.grid(row=0, column=2, padx=5)
 
         self.clear_log_button = tk.Button(
             frame,
@@ -264,7 +263,7 @@ class BotGUI(tk.Tk):
             command= lambda: clear_logs(self.log_area),
             **btn_style
         )
-        self.clear_log_button.grid(row=0, column=3, padx=10)
+        self.clear_log_button.grid(row=0, column=3, padx=5)
     
         self.cog_button = tk.Button(
             frame,
@@ -272,7 +271,7 @@ class BotGUI(tk.Tk):
             command= lambda: self.open_cog_manager(),
             **btn_style
         )
-        self.cog_button.grid(row=1, column=0, padx=10, pady=10)
+        self.cog_button.grid(row=1, column=0, padx=5, pady=10)
         
         # Footer
         footer = tk.Label(
