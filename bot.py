@@ -28,7 +28,7 @@ def load_cogs(bot):
     print("Scanning package cogs...")
     for module in pkgutil.iter_modules(cogs.__path__, "cogs."):
         name = module.name
-        if name == "cogs._rules_cog" or name == "cogs.roast":
+        if name == "cogs._rules_cog" or name == "cogs.roast_ai":
             continue
         print(f"Loading {name}")
         bot.load_extension(name)   
@@ -40,10 +40,8 @@ def run_bot():
 
     try:
         load_cogs(bot)
-
         bot_loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(bot_loop)
-
+        asyncio.set_event_loop(bot_loop)        
         bot_loop.run_until_complete(bot.start(DISCORD_TOKEN))
 
     except Exception:
