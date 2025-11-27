@@ -1,4 +1,5 @@
 from cx_Freeze import Executable, setup
+from core.config import BOT_VERSION
 import sys
 import os
 
@@ -8,7 +9,6 @@ include_files =[
     ("data", "data"),
     ("views", "views"),
     ("gui", "gui"),
-    (".env", ".env"),
     ("utils.py", "utils.py")
 ]
 include_dirs = [
@@ -33,15 +33,21 @@ build_exe_options = {
     "include_files": include_files,
     "include_msvcr": True
 }
+    
+target = Executable(
+    script="bot.py",
+    base="Win32GUI",
+    target_name="BLCKScopezDiscordBot",
+    copyright='Copyright (c) 2025, S3R43o3',
+    shortcut_name='BLCKScopezDiscordBot'
+)
 
-base = None
-if sys.platform == "win32":
-    base = "Win32gui"
 
 setup(
     name = "BLCKScopezDiscordBot",
-    version = "1.0",
+    version = f"{BOT_VERSION}",
+    author="S3R43o3",
     description = "Discord Bot for BLCKScopez",
     options = {"build_exe": build_exe_options},
-    executables = [Executable("bot.py", base=base)]
+    executables = [target]
 )
