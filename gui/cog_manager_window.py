@@ -3,9 +3,11 @@ import tkinter as tk
 from tkinter import messagebox
 import cogs
 import pkgutil
+from disnake.ext import commands
+
 
 class CogManagerWindow(tk.Toplevel):
-    def __init__(self, master, bot, refresh_callback = None):
+    def __init__(self, master, bot: commands.Bot, refresh_callback = None):
         super().__init__(master)
         self.bot = bot
         self.refresh_callback = refresh_callback
