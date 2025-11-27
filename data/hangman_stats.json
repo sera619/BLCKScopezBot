@@ -1,0 +1,21 @@
+{
+    "1041751286221111406": {
+        "games_played": 2,
+        "games_won": 2,
+        "games_lost": 0,
+        "letters_guessed": 6,
+        "correct_letters": 6,
+        "wrong_letters": 0,
+        "points_total": 6
+    },
+    "262594445315145728":{
+        "games_played": 1,
+        "games_won": 1,
+        "games_lost": 0,
+        "letters_guessed": 3,
+        "correct_letters": 3,
+        "wrong_letters": 0,
+        "points_total": 3
+
+    }
+}
