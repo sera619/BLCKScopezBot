@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-BOT_VERSION = "1.7.1"
+BOT_VERSION = "1.8.3"
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
 TWITCH_ICON_URL = "https://static.twitchcdn.net/assets/favicon-32-e29e246c157142c94346.png"
@@ -17,3 +17,4 @@ SERA_ID = os.getenv("SERA_ID")
 RULES_CHANNEL_ID = os.getenv("RULES_CHANNEL_ID")
 ROLE_RULE_ID = os.getenv("ROLE_RULE_ID")
 VOICE_CREATE_CHANNEL_ID = int(os.getenv("VOICE_CREATE_CHANNEL_ID"))
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
